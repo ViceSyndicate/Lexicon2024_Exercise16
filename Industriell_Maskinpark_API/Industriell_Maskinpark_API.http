@@ -1,0 +1,6 @@
+@Industriell_Maskinpark_API_HostAddress = http://localhost:5262
+
+GET {{Industriell_Maskinpark_API_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
