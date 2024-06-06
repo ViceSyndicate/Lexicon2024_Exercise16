@@ -1,14 +1,12 @@
-﻿@page "/weather"
+﻿@page "/machines"
 @using Industriell_Maskinpark_API.Models
 @attribute [StreamRendering]
 
-<PageTitle>Weather</PageTitle>
+<PageTitle>Machines</PageTitle>
 
-<h1>Weather</h1>
+<h1>Machines</h1>
 
-<p>This component demonstrates showing data.</p>
-
-@if (forecasts == null)
+@if (machines == null)
 {
     <p><em>Loading...</em></p>
 }
@@ -17,20 +15,24 @@ else
     <table class="table">
         <thead>
             <tr>
-                <th>Date</th>
-                <th>Temp. (C)</th>
-                <th>Temp. (F)</th>
-                <th>Summary</th>
+                <th><span class="bi bi-trash" aria-hidden="true"></span></th>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Last Contact</th>
+                <th>Last Msg</th>
+                <th>Status</th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var forecast in forecasts)
+            @foreach (var machine in machines)
             {
                 <tr>
-                    <td>@forecast.Date.ToShortDateString()</td>
-                    <td>@forecast.TemperatureC</td>
-                    <td>@forecast.TemperatureF</td>
-                    <td>@forecast.Summary</td>
+                    <td><button class="bi bi-trash"></button></td>
+                    <td>@machine.Id</td>
+                    <td>@machine.Name</td>
+                    <td>@machine.LatestContact</td>
+                    <td>@machine.LastMessage</td>
+                    <td>@machine.Status</td>
                 </tr>
             }
         </tbody>
