@@ -1,16 +1,19 @@
 ﻿@inherits LayoutComponentBase
+@page "/machines"
+@using Industriell_Maskinpark_API.Models
+@attribute [StreamRendering]
 
 <div class="page">
     <div class="sidebar">
         <NavMenu />
     </div>
 
-    <div class="sidebar">
-        <TopInfo />
-    </div>
-
     <main>
         <div class="top-row px-4">
+            <!-- We can put Machine Park Info here -->
+
+            <p class="align-middle">Online Vehicles: @_onlineMachines</p>
+
             <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
         </div>
 
@@ -25,3 +28,42 @@
     <a href="" class="reload">Reload</a>
     <a class="dismiss">🗙</a>
 </div>
+
+
+@code {
+    private Machine[]? machines;
+    private int _onlineMachines = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        // Simulate asynchronous loading to demonstrate streaming rendering
+        await Task.Delay(500);
+
+        Machine machine1 = new Machine
+            {
+                Id = Guid.NewGuid(),
+                Name = "CAT Bulldozer",
+                Status = true,
+                LastMessage = "Dozin'",
+                LatestContact = DateTime.Now
+            };
+        Machine machine2 = new Machine
+            {
+                Id = Guid.NewGuid(),
+                Name = "CAT Hauler",
+                Status = true,
+                LastMessage = "Transporting",
+                LatestContact = DateTime.Now
+            };
+
+        machines = new[] { machine1, machine2 };
+
+        foreach(Machine machine in machines)
+        {
+            if (machine.Status)
+            {
+                _onlineMachines++;
+            }
+        }
+    }
+}

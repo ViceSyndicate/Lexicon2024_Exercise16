@@ -1,6 +1,5 @@
 using Industriell_Maskinpark_API;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.InMemory.Storage.Internal;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,5 +27,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+new SeedCode(app);
 
 app.Run();
