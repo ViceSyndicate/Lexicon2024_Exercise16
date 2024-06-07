@@ -51,24 +51,5 @@ else
 
         List<Machine> machinesFromApi = await MachineService.GetMachinesAsync();
         machines = machinesFromApi.ToArray();
-
-        // Machine machine1 = new Machine
-        //     {
-        //         Id = Guid.NewGuid(),
-        //         Name = "CAT Bulldozer",
-        //         Status = true,
-        //         LastMessage = "Dozin'",
-        //         LatestContact = DateTime.Now
-        //     };
-        // Machine machine2 = new Machine
-        //     {
-        //         Id = Guid.NewGuid(),
-        //         Name = "CAT Hauler",
-        //         Status = true,
-        //         LastMessage = "Transporting",
-        //         LatestContact = DateTime.Now
-        //     };
-
-        // machines = new[] { machine1, machine2 };
     }
 }
