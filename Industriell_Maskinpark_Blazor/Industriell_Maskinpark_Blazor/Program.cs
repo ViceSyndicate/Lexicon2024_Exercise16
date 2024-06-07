@@ -1,5 +1,6 @@
-using Industriell_Maskinpark_Blazor.Client.Pages;
 using Industriell_Maskinpark_Blazor.Components;
+using Industriell_Maskinpark_Blazor.Services;
+using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +8,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
+
+// Configures httpclient for api calls to other project
+builder.Services.AddHttpClient("ApiClient", client =>
+{
+    client.BaseAddress = new Uri("Https://localhost:7262/");
+});
+
+builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("ApiClient"));
+builder.Services.AddScoped<MachineService>();
 
 var app = builder.Build();
 

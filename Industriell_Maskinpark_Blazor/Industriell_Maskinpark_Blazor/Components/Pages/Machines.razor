@@ -1,5 +1,7 @@
 ﻿@page "/machines"
 @using Industriell_Maskinpark_API.Models
+@using Industriell_Maskinpark_Blazor.Services
+@inject MachineService MachineService
 @attribute [StreamRendering]
 
 <PageTitle>Machines</PageTitle>
@@ -41,29 +43,32 @@ else
 
 @code {
     private Machine[]? machines;
-
+    
     protected override async Task OnInitializedAsync()
     {
         // Simulate asynchronous loading to demonstrate streaming rendering
         await Task.Delay(500);
 
-        Machine machine1 = new Machine
-            {
-                Id = Guid.NewGuid(),
-                Name = "CAT Bulldozer",
-                Status = true,
-                LastMessage = "Dozin'",
-                LatestContact = DateTime.Now
-            };
-        Machine machine2 = new Machine
-            {
-                Id = Guid.NewGuid(),
-                Name = "CAT Hauler",
-                Status = true,
-                LastMessage = "Transporting",
-                LatestContact = DateTime.Now
-            };
+        List<Machine> machinesFromApi = await MachineService.GetMachinesAsync();
+        machines = machinesFromApi.ToArray();
 
-        machines = new[] { machine1, machine2 };
+        // Machine machine1 = new Machine
+        //     {
+        //         Id = Guid.NewGuid(),
+        //         Name = "CAT Bulldozer",
+        //         Status = true,
+        //         LastMessage = "Dozin'",
+        //         LatestContact = DateTime.Now
+        //     };
+        // Machine machine2 = new Machine
+        //     {
+        //         Id = Guid.NewGuid(),
+        //         Name = "CAT Hauler",
+        //         Status = true,
+        //         LastMessage = "Transporting",
+        //         LatestContact = DateTime.Now
+        //     };
+
+        // machines = new[] { machine1, machine2 };
     }
 }

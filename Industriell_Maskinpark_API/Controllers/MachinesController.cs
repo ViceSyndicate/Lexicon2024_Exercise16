@@ -28,6 +28,14 @@ namespace Industriell_Maskinpark_API.Controllers
             return await _context.Machines.ToListAsync();
         }
 
+        // Not sure why this breaks the api...
+        //[HttpGet]
+        //public async Task<ActionResult<int>> GetNrOfOnlineMachines()
+        //{
+        //    var machines = await _context.Machines.Where(x => x.Status == true).ToListAsync();
+        //    return machines.Count();
+        //}
+
         // GET: api/Machines/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Machine>> GetMachine(Guid id)
