@@ -1,5 +1,6 @@
 ﻿@page "/machines"
 @using Industriell_Maskinpark_API.Models
+@using Industriell_Maskinpark_API.ViewModels
 @using Industriell_Maskinpark_Blazor.Services
 @inject MachineService MachineService
 @attribute [StreamRendering]
@@ -17,24 +18,36 @@ else
     <table class="table">
         <thead>
             <tr>
-                <th><span class="bi bi-trash" aria-hidden="true"></span></th>
                 <th>ID</th>
                 <th>Name</th>
                 <th>Last Contact</th>
                 <th>Last Msg</th>
                 <th>Status</th>
+                <th><span class="bi bi-message"></span></th>
+                <th><span class="bi bi-trash"></span></th>
             </tr>
         </thead>
         <tbody>
             @foreach (var machine in machines)
             {
                 <tr>
-                    <td><button class="bi bi-trash"></button></td>
+
                     <td>@machine.Id</td>
                     <td>@machine.Name</td>
                     <td>@machine.LatestContact</td>
                     <td>@machine.LastMessage</td>
                     <td>@machine.Status</td>
+                    <td>
+                        <button class="button-sizer">
+                            Send Data
+                        </button>
+                    </td>
+                    <td>
+                        <button class="button-sizer">
+                            Del
+                        </button>
+                    </td>
+
                 </tr>
             }
         </tbody>
@@ -42,14 +55,22 @@ else
 }
 
 @code {
-    private Machine[]? machines;
-    
+    private MachineViewModel[]? machines;
+
     protected override async Task OnInitializedAsync()
     {
         // Simulate asynchronous loading to demonstrate streaming rendering
         await Task.Delay(500);
 
+        List<MachineViewModel> MachineListVM = new List<MachineViewModel>();
         List<Machine> machinesFromApi = await MachineService.GetMachinesAsync();
-        machines = machinesFromApi.ToArray();
+
+        foreach (Machine machine in machinesFromApi)
+        {
+            MachineViewModel VMMachine = new MachineViewModel(machine);
+            MachineListVM.Add(VMMachine);
+        }
+
+        machines = MachineListVM.ToArray();
     }
 }

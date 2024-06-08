@@ -10,12 +10,11 @@
     </div>
 
     <main>
-        <div class="top-row px-4">
+        <div class="top-row px-4 d-flex justify-content-between">
             <!-- We can put Machine Park Info here -->
 
-            <p class="align-middle">Online Vehicles: @_onlineMachines</p>
+            <p class="align-middle mb-0">Online Vehicles: @_onlineMachines / @_totalMachines</p>
 
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
         </div>
 
         <article class="content px-4">
@@ -34,23 +33,22 @@
 @code {
     private Machine[]? machines;
     private int _onlineMachines = 0;
+    private int _totalMachines = 0;
 
     protected override async Task OnInitializedAsync()
     {
-        // Simulate asynchronous loading to demonstrate streaming rendering
-        await Task.Delay(500);
 
         List<Machine>? machinesFromApi = await MachineService.GetMachinesAsync();
         if(machinesFromApi != null)
         {
             machines = machinesFromApi.ToArray();
-        }
-
-        foreach(Machine machine in machines)
-        {
-            if (machine.Status)
+            _totalMachines = machines.Count();
+            foreach (Machine machine in machines)
             {
-                _onlineMachines++;
+                if (machine.Status)
+                {
+                    _onlineMachines++;
+                }
             }
         }
     }
