@@ -1,0 +1,30 @@
+﻿@page "/message"
+
+<h1>Message</h1>
+
+<form method="post" @onsubmit="Submit" @formname="message">
+    <AntiforgeryToken />
+
+    <label>Enter A Message</label>
+    <InputText bind-value="@message"></InputText>
+    <button type="submit">Send</button>
+</form>
+
+<button @onsubmit="Delete">Delete</button>
+
+@code {
+    string message;
+
+    private void Submit() {
+        Console.WriteLine("Beep");
+        Console.WriteLine("Beep");
+        Console.WriteLine("I'm a Sheep");
+    }
+
+    private void Delete()
+    {
+        Console.WriteLine("Beep");
+        Console.WriteLine("Beep");
+        Console.WriteLine("I'm a Sheep");
+    }
+}
