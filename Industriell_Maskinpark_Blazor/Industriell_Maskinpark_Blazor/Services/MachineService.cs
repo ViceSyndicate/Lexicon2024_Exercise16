@@ -17,6 +17,19 @@ namespace Industriell_Maskinpark_Blazor.Services
             return await _httpClient.GetFromJsonAsync<List<Machine>>("api/Machines");
         }
 
+        public async Task<bool> FlipPowerSwitch(Machine machine)
+        {
+            if (machine.Status)
+            {
+                machine.Status = false;
+            } 
+            else
+            {
+                machine.Status = true;
+            }
+            return await UpdateMachine(machine);
+        }
+
         public async Task<bool> UpdateMachine(Machine machine)
         {
             string json = JsonSerializer.Serialize(machine);

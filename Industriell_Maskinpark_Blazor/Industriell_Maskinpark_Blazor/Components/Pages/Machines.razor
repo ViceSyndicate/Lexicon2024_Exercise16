@@ -74,7 +74,7 @@ else
         // Simulate asynchronous loading to demonstrate streaming rendering
         await GetMachines();
         await Task.Delay(500);
-        
+
     }
 
     public async Task GetMachines()
@@ -108,7 +108,8 @@ else
     {
         Machine dto = new Machine(machine);
 
-        var result = await MachineService.UpdateMachine(dto);
-
+        var result = await MachineService.FlipPowerSwitch(dto);
+        await GetMachines();
+        StateHasChanged();
     }
 }
