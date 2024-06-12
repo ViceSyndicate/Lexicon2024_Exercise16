@@ -1,4 +1,5 @@
 ﻿using Industriell_Maskinpark_API.Models;
+using System.Text.Json;
 
 namespace Industriell_Maskinpark_Blazor.Services
 {
@@ -14,6 +15,23 @@ namespace Industriell_Maskinpark_Blazor.Services
         public async Task<List<Machine>> GetMachinesAsync()
         {
             return await _httpClient.GetFromJsonAsync<List<Machine>>("api/Machines");
+        }
+
+        public async Task<bool> UpdateMachine(Machine machine)
+        {
+            string json = JsonSerializer.Serialize(machine);
+
+            HttpContent httpContent = new StringContent(json, System.Text.Encoding.UTF8, "application/json");
+            var result = await _httpClient.PutAsync("api/Machines/" + machine.Id, httpContent);
+
+            return result.IsSuccessStatusCode;
+            
+            //if (result.IsSuccessStatusCode) {
+            //    return true;
+            //} else
+            //{
+            //    return false;
+            //}
         }
 
         public async Task<bool> DeleteMachine(Guid guid)
