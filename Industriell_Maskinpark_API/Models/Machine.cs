@@ -20,6 +20,19 @@ namespace Industriell_Maskinpark_API.Models
             
         }
 
+        /// <summary>
+        /// Used to create a new machine.
+        /// </summary>
+        /// <param name="name"></param>
+        public Machine(string name)
+        {
+            this.Id = Guid.NewGuid();
+            this.Name = name;
+            this.Status = false;
+            this.LatestContact = DateTime.Now;
+            this.LastMessage = string.Empty;
+        }
+
         public Machine(MachineViewModel machineVM)
         {
             this.Id = machineVM.Id;

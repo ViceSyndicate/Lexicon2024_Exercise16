@@ -1,0 +1,35 @@
+﻿@page "/new-machine-form"
+@using Industriell_Maskinpark_Blazor.Services
+@inject MachineService MachineService
+@inject NavigationManager NavigationManager
+@rendermode InteractiveServer
+
+<h3>NewMachine</h3>
+
+<form @onsubmit="Submit" @formname="new-machine-form">
+    <AntiforgeryToken />
+    <div>
+        <label>New Machine Name
+            <InputText @bind-Value="machineName" class="form-control" id="machineName" />
+        </label>
+        <input type="submit" class="btn-primary" value="Save"/>
+    </div>
+</form>
+
+@code {
+    public string? machineName { get; set; }
+
+    private async Task Submit()
+    {
+
+        if(!string.IsNullOrWhiteSpace(machineName))
+        {
+            bool result = await MachineService.CreateMachine(machineName);
+            NavigationManager.NavigateTo("machines");
+        } else
+        {
+
+            // Bad Request
+        }
+    }
+}
