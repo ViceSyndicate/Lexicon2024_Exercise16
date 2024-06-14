@@ -1,0 +1,50 @@
+﻿@using Industriell_Maskinpark_API.ViewModels
+@using Industriell_Maskinpark_API.Models;
+@using Industriell_Maskinpark_Blazor.Services
+@inject MachineService MachineService
+@inject NavigationManager NavigationManager
+@rendermode InteractiveServer
+@page "/edit-machine-form/{id}"
+
+
+<h3>Edit Machine</h3>
+
+@if (model == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <EditForm Model="model" OnValidSubmit="@HandleValidSubmit">
+        <label>
+            Machine Name
+            <InputText @bind-Value="model.Name" class="form-control" />
+        </label>
+        <button type="submit" class="btn btn-primary">
+            Save
+        </button>
+    </EditForm>
+}
+
+@code {
+    [Parameter]
+    public string? id { get; set; }
+
+    private MachineViewModel? model;
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await MachineService.GetMachineAsync(id);
+        // Might want to set a timeout here if it takes too long.
+        // We probably didn't find a machine with matching id.
+        model = new MachineViewModel(result);
+    }
+
+    private async void HandleValidSubmit()
+    {
+        Machine updatedMachine = new Machine(model);
+        var result = await MachineService.UpdateMachine(updatedMachine);
+        NavigationManager.NavigateTo("machines");
+    }
+}

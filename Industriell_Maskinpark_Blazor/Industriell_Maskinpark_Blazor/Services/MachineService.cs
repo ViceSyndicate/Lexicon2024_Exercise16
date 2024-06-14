@@ -17,6 +17,12 @@ namespace Industriell_Maskinpark_Blazor.Services
             return await _httpClient.GetFromJsonAsync<List<Machine>>("api/Machines");
         }
 
+        public async Task<Machine> GetMachineAsync(string id)
+        {
+            Guid guid = Guid.Parse(id);
+            return await _httpClient.GetFromJsonAsync<Machine>("api/Machines/" + guid);
+        }
+
         public async Task<bool> CreateMachine(string name)
         {
             // create new machine with the name provided.
