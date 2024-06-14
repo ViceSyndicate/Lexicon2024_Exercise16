@@ -1,4 +1,5 @@
 ﻿using Industriell_Maskinpark_API.Models;
+using System;
 using System.Text.Json;
 
 namespace Industriell_Maskinpark_Blazor.Services
@@ -57,13 +58,6 @@ namespace Industriell_Maskinpark_Blazor.Services
             var result = await _httpClient.PutAsync("api/Machines/" + machine.Id, httpContent);
 
             return result.IsSuccessStatusCode;
-            
-            //if (result.IsSuccessStatusCode) {
-            //    return true;
-            //} else
-            //{
-            //    return false;
-            //}
         }
 
         public async Task<bool> DeleteMachine(Guid guid)

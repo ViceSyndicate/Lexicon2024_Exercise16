@@ -1,30 +1,42 @@
-﻿@page "/message"
-
+﻿@page "/message/{id}"
+@rendermode InteractiveServer
+@using Industriell_Maskinpark_API.Models
+@using Industriell_Maskinpark_Blazor.Services
+@inject MachineService MachineService
+@inject NavigationManager NavigationManager
 <h1>Message</h1>
 
 <form method="post" @onsubmit="Submit" @formname="message">
     <AntiforgeryToken />
 
-    <label>Enter A Message</label>
-    <InputText bind-value="@message"></InputText>
-    <button type="submit">Send</button>
+    <label>
+        Enter Message
+        <InputText @bind-Value="message" class="form-control" />
+    </label>
+    <button type="submit" class="btn btn-primary">
+        Save
+    </button>
 </form>
 
-<button @onsubmit="Delete">Delete</button>
-
 @code {
-    string message;
+    [Parameter]
+    public string? id { get; set; }
+    string? message { get; set; }
 
-    private void Submit() {
-        Console.WriteLine("Beep");
-        Console.WriteLine("Beep");
-        Console.WriteLine("I'm a Sheep");
-    }
-
-    private void Delete()
+    private async void Submit()
     {
-        Console.WriteLine("Beep");
-        Console.WriteLine("Beep");
-        Console.WriteLine("I'm a Sheep");
+        if (!string.IsNullOrWhiteSpace(message)){
+
+            Machine machine = await MachineService.GetMachineAsync(id);
+            machine.LastMessage = message;
+            bool result = await MachineService.UpdateMachine(machine);
+            if (result)
+            {
+                NavigationManager.NavigateTo("machines");
+            } else
+            {
+                // Couldn't Update Machine Message
+            }
+        }
     }
 }
