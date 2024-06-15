@@ -16,6 +16,8 @@
 else
 {
     <EditForm Model="model" OnValidSubmit="@HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
         <label>
             Machine Name
             <InputText @bind-Value="model.Name" class="form-control" />

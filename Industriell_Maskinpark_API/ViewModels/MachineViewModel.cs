@@ -1,4 +1,5 @@
 ﻿using Industriell_Maskinpark_API.Models;
+using System.ComponentModel.DataAnnotations;
 using System.Reflection.PortableExecutable;
 
 namespace Industriell_Maskinpark_API.ViewModels
@@ -6,6 +7,8 @@ namespace Industriell_Maskinpark_API.ViewModels
     public class MachineViewModel
     {
         public Guid Id { get; set; }
+        [Required]
+        [Length(2, 32, ErrorMessage = "Name must be between 2-32 characters.")]
         public string Name { get; set; }
         public string Status { get; set; }
         public DateTime LatestContact { get; set; }
